@@ -14,7 +14,7 @@ deploy:
     script: bash deployment/docker/publish.sh
     on:
       branch: master
-  - provider: script
-    script: bash deployment/k8s/deploy.sh
-    on:
-      branch: master
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push swilliams13/udagram
